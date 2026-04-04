@@ -37,21 +37,33 @@ interface WeddingData {
 }
 
 async function getBaseUrl(): Promise<string> {
-  const h = await headers();
-  const host = h.get("host") || "localhost:3000";
-  const protocol = host.includes("localhost") ? "http" : "https";
-  return `${protocol}://${host}`;
+  try {
+    const h = await headers();
+    const host = h.get("host");
+    if (host) {
+      const protocol = host.includes("localhost") ? "http" : "https";
+      return `${protocol}://${host}`;
+    }
+  } catch {
+    // headers() not available
+  }
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  return "http://localhost:3000";
 }
 
 async function getWeddingData(): Promise<WeddingData | null> {
   const baseUrl = await getBaseUrl();
+  console.log("[getWeddingData] fetching from:", `${baseUrl}/api/wedding`);
   try {
     const res = await fetch(`${baseUrl}/api/wedding`, {
       cache: "no-store",
     });
+    console.log("[getWeddingData] response status:", res.status);
     if (!res.ok) return null;
     return res.json();
-  } catch {
+  } catch (err) {
+    console.error("[getWeddingData] fetch error:", err);
     return null;
   }
 }
