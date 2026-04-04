@@ -10,7 +10,7 @@ import { getDb } from "@/lib/mongodb";
 
 export const dynamic = "force-dynamic";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line
 async function getWeddingData(): Promise<any> {
   try {
     const db = await getDb();
