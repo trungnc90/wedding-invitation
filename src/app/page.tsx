@@ -6,64 +6,32 @@ import RSVPForm from "@/components/RSVPForm";
 import WishesSection, { Wish } from "@/components/WishesSection";
 import LanguageToggle from "@/components/LanguageToggle";
 
+import { getDb } from "@/lib/mongodb";
+
 export const dynamic = "force-dynamic";
 
-interface WeddingData {
-  couple: {
-    bride: { firstName: string; lastName: string; photo: string; bio: string };
-    groom: { firstName: string; lastName: string; photo: string; bio: string };
-    loveStory: string;
-  };
-  heroPhoto: string;
-  heroPhotoMobile?: string;
-  weddingDate: string;
-  events: Array<{
-    _id: string;
-    title: string;
-    date: string;
-    time: string;
-    venueName: string;
-    venueAddress: string;
-  }>;
-  gallery: Array<{
-    _id: string;
-    url: string;
-    thumbnailUrl: string;
-    order: number;
-  }>;
-  translations?: {
-    en?: Record<string, unknown>;
-  };
-}
-
-function getBaseUrl(): string {
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
-  return "http://localhost:3000";
-}
-
-async function getWeddingData(): Promise<WeddingData | null> {
-  const baseUrl = getBaseUrl();
-  console.log("[getWeddingData] fetching from:", `${baseUrl}/api/wedding`);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function getWeddingData(): Promise<any> {
   try {
-    const res = await fetch(`${baseUrl}/api/wedding`);
-    console.log("[getWeddingData] response status:", res.status);
-    if (!res.ok) return null;
-    const data = await res.json();
-    console.log("[getWeddingData] got data:", !!data);
-    return data;
+    const db = await getDb();
+    const wedding = await db.collection("wedding").findOne({});
+    if (!wedding) return null;
+    return JSON.parse(JSON.stringify(wedding));
   } catch (err) {
-    console.error("[getWeddingData] fetch error:", err);
+    console.error("[getWeddingData] error:", err);
     return null;
   }
 }
 
 async function getWishes(): Promise<Wish[]> {
-  const baseUrl = getBaseUrl();
   try {
-    const res = await fetch(`${baseUrl}/api/wishes`);
-    if (!res.ok) return [];
-    return res.json();
+    const db = await getDb();
+    const wishes = await db
+      .collection("wishes")
+      .find({ approved: true })
+      .sort({ createdAt: -1 })
+      .toArray();
+    return JSON.parse(JSON.stringify(wishes));
   } catch {
     return [];
   }
