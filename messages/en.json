@@ -1,0 +1,93 @@
+{
+  "HeroSection": {
+    "gettingMarried": "We are getting married"
+  },
+  "CountdownTimer": {
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds"
+  },
+  "CoupleSection": {
+    "title": "Bride & Groom",
+    "bride": "Bride",
+    "groom": "Groom",
+    "loveStory": "Our Love Story"
+  },
+  "EventSection": {
+    "title": "Wedding Events"
+  },
+  "GallerySection": {
+    "title": "Photo Gallery",
+    "viewPhoto": "View photo {index}",
+    "photo": "Photo {index}",
+    "lightboxLabel": "Photo lightbox",
+    "close": "Close",
+    "previous": "Previous photo",
+    "next": "Next photo",
+    "counter": "{current} / {total}"
+  },
+  "RSVPForm": {
+    "title": "RSVP",
+    "nameLabel": "Full name",
+    "attendingLabel": "Will you attend?",
+    "attendingYes": "Yes, I will attend",
+    "attendingNo": "Cannot attend",
+    "attendeesLabel": "Number of attendees",
+    "messageLabel": "Message",
+    "submit": "Submit RSVP",
+    "submitting": "Submitting...",
+    "successMessage": "Thank you for your RSVP!",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "required": "*",
+    "validation": {
+      "nameRequired": "Please enter your name",
+      "nameMaxLength": "Name must be 100 characters or less",
+      "attendingRequired": "Please confirm your attendance",
+      "attendeesRange": "Number of attendees must be between 1 and 10",
+      "messageMaxLength": "Message must be 500 characters or less"
+    }
+  },
+  "WishesSection": {
+    "title": "Wishes",
+    "nameLabel": "Full name",
+    "messageLabel": "Your wish",
+    "submit": "Send Wish",
+    "submitting": "Submitting...",
+    "successMessage": "Thank you for your wish!",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "noWishes": "No wishes yet.",
+    "required": "*",
+    "validation": {
+      "nameRequired": "Please enter your name",
+      "nameMaxLength": "Name must be 100 characters or less",
+      "messageRequired": "Please enter your wish",
+      "messageMaxLength": "Wish must be 1000 characters or less"
+    }
+  },
+  "LanguageToggle": {
+    "label": "Language",
+    "vi": "VI",
+    "en": "EN"
+  },
+  "HomePage": {
+    "loadError": "Unable to load wedding information. Please try again later."
+  },
+  "AdminPanel": {
+    "title": "Admin Dashboard",
+    "loginTitle": "Admin Login",
+    "passwordLabel": "Password",
+    "loginButton": "Login",
+    "loggingIn": "Logging in...",
+    "invalidPassword": "Invalid password",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "loadingData": "Loading wedding data...",
+    "tabs": {
+      "couple": "Couple",
+      "events": "Events",
+      "gallery": "Gallery",
+      "rsvps": "RSVPs",
+      "wishes": "Wishes"
+    }
+  }
+}

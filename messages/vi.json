@@ -1,0 +1,93 @@
+{
+  "HeroSection": {
+    "gettingMarried": "Chúng tôi sắp kết hôn"
+  },
+  "CountdownTimer": {
+    "days": "Ngày",
+    "hours": "Giờ",
+    "minutes": "Phút",
+    "seconds": "Giây"
+  },
+  "CoupleSection": {
+    "title": "Cô Dâu & Chú Rể",
+    "bride": "Cô Dâu",
+    "groom": "Chú Rể",
+    "loveStory": "Câu Chuyện Tình Yêu"
+  },
+  "EventSection": {
+    "title": "Sự Kiện Cưới"
+  },
+  "GallerySection": {
+    "title": "Thư Viện Ảnh",
+    "viewPhoto": "Xem ảnh {index}",
+    "photo": "Ảnh {index}",
+    "lightboxLabel": "Lightbox ảnh",
+    "close": "Đóng",
+    "previous": "Ảnh trước",
+    "next": "Ảnh tiếp",
+    "counter": "{current} / {total}"
+  },
+  "RSVPForm": {
+    "title": "Xác Nhận Tham Dự",
+    "nameLabel": "Họ và tên",
+    "attendingLabel": "Bạn có tham dự không?",
+    "attendingYes": "Có, tôi sẽ tham dự",
+    "attendingNo": "Không thể tham dự",
+    "attendeesLabel": "Số người tham dự",
+    "messageLabel": "Lời nhắn",
+    "submit": "Gửi Xác Nhận",
+    "submitting": "Đang gửi...",
+    "successMessage": "Cảm ơn bạn đã xác nhận tham dự!",
+    "errorGeneric": "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
+    "required": "*",
+    "validation": {
+      "nameRequired": "Vui lòng nhập tên của bạn",
+      "nameMaxLength": "Tên không được quá 100 ký tự",
+      "attendingRequired": "Vui lòng xác nhận tham dự",
+      "attendeesRange": "Số người tham dự phải từ 1 đến 10",
+      "messageMaxLength": "Lời nhắn không được quá 500 ký tự"
+    }
+  },
+  "WishesSection": {
+    "title": "Lời Chúc",
+    "nameLabel": "Họ và tên",
+    "messageLabel": "Lời chúc",
+    "submit": "Gửi Lời Chúc",
+    "submitting": "Đang gửi...",
+    "successMessage": "Cảm ơn bạn đã gửi lời chúc!",
+    "errorGeneric": "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
+    "noWishes": "Chưa có lời chúc nào.",
+    "required": "*",
+    "validation": {
+      "nameRequired": "Vui lòng nhập tên của bạn",
+      "nameMaxLength": "Tên không được quá 100 ký tự",
+      "messageRequired": "Vui lòng nhập lời chúc",
+      "messageMaxLength": "Lời chúc không được quá 1000 ký tự"
+    }
+  },
+  "LanguageToggle": {
+    "label": "Ngôn ngữ",
+    "vi": "VI",
+    "en": "EN"
+  },
+  "HomePage": {
+    "loadError": "Không thể tải thông tin đám cưới. Vui lòng thử lại sau."
+  },
+  "AdminPanel": {
+    "title": "Admin Dashboard",
+    "loginTitle": "Admin Login",
+    "passwordLabel": "Password",
+    "loginButton": "Login",
+    "loggingIn": "Logging in...",
+    "invalidPassword": "Invalid password",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "loadingData": "Loading wedding data...",
+    "tabs": {
+      "couple": "Couple",
+      "events": "Events",
+      "gallery": "Gallery",
+      "rsvps": "RSVPs",
+      "wishes": "Wishes"
+    }
+  }
+}
