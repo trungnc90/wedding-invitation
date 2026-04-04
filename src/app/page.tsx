@@ -34,8 +34,14 @@ interface WeddingData {
   };
 }
 
+function getBaseUrl(): string {
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
+  return "http://localhost:3000";
+}
+
 async function getWeddingData(): Promise<WeddingData | null> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const baseUrl = getBaseUrl();
   try {
     const res = await fetch(`${baseUrl}/api/wedding`, {
       cache: "no-store",
@@ -48,7 +54,7 @@ async function getWeddingData(): Promise<WeddingData | null> {
 }
 
 async function getWishes(): Promise<Wish[]> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const baseUrl = getBaseUrl();
   try {
     const res = await fetch(`${baseUrl}/api/wishes`, {
       cache: "no-store",

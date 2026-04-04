@@ -15,7 +15,7 @@
 3. Create a database user:
    - Database Access > Add New Database User
    - Choose password authentication
-   - Set username and password (save these)
+   - Set username and password (save these) (user: trungnc90deal, password: ModuleTest@22)
    - Role: "Read and write to any database"
 4. Allow network access from Vercel:
    - Network Access > Add IP Address
@@ -25,6 +25,8 @@
    - Clusters > Connect > Drivers
    - Copy the connection string: `mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/wedding`
    - Replace `<username>` and `<password>` with your database user credentials
+
+mongodb+srv://trungnc90deal:ModuleTest22@wedding-invitation.wnihoh8.mongodb.net/?appName=wedding-invitation
 
 ## Step 2: Seed the Production Database
 
