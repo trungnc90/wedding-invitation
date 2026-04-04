@@ -6,8 +6,6 @@ import RSVPForm from "@/components/RSVPForm";
 import WishesSection, { Wish } from "@/components/WishesSection";
 import LanguageToggle from "@/components/LanguageToggle";
 
-import { headers } from "next/headers";
-
 export const dynamic = "force-dynamic";
 
 interface WeddingData {
@@ -38,32 +36,22 @@ interface WeddingData {
   };
 }
 
-async function getBaseUrl(): Promise<string> {
-  try {
-    const h = await headers();
-    const host = h.get("host");
-    if (host) {
-      const protocol = host.includes("localhost") ? "http" : "https";
-      return `${protocol}://${host}`;
-    }
-  } catch {
-    // headers() not available
-  }
+function getBaseUrl(): string {
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  if (process.env.NEXT_PUBLIC_VERCEL_URL) return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
   return "http://localhost:3000";
 }
 
 async function getWeddingData(): Promise<WeddingData | null> {
-  const baseUrl = await getBaseUrl();
+  const baseUrl = getBaseUrl();
   console.log("[getWeddingData] fetching from:", `${baseUrl}/api/wedding`);
   try {
-    const res = await fetch(`${baseUrl}/api/wedding`, {
-      cache: "no-store",
-    });
+    const res = await fetch(`${baseUrl}/api/wedding`);
     console.log("[getWeddingData] response status:", res.status);
     if (!res.ok) return null;
-    return res.json();
+    const data = await res.json();
+    console.log("[getWeddingData] got data:", !!data);
+    return data;
   } catch (err) {
     console.error("[getWeddingData] fetch error:", err);
     return null;
@@ -71,11 +59,9 @@ async function getWeddingData(): Promise<WeddingData | null> {
 }
 
 async function getWishes(): Promise<Wish[]> {
-  const baseUrl = await getBaseUrl();
+  const baseUrl = getBaseUrl();
   try {
-    const res = await fetch(`${baseUrl}/api/wishes`, {
-      cache: "no-store",
-    });
+    const res = await fetch(`${baseUrl}/api/wishes`);
     if (!res.ok) return [];
     return res.json();
   } catch {
