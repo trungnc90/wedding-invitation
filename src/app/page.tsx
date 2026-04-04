@@ -8,6 +8,8 @@ import LanguageToggle from "@/components/LanguageToggle";
 
 import { headers } from "next/headers";
 
+export const dynamic = "force-dynamic";
+
 interface WeddingData {
   couple: {
     bride: { firstName: string; lastName: string; photo: string; bio: string };
