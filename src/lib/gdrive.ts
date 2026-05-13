@@ -1,93 +1,50 @@
 const GOOGLE_DRIVE_FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID || "";
-
-interface ServiceAccountKey {
-  client_email: string;
-  private_key: string;
-  token_uri: string;
-}
-
-interface GoogleTokenResponse {
-  access_token: string;
-  expires_in: number;
-  token_type: string;
-}
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || "";
+const GOOGLE_REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN || "";
 
 interface GoogleDriveFile {
   id: string;
   name: string;
-  webViewLink?: string;
-  webContentLink?: string;
 }
 
-function getServiceAccountKey(): ServiceAccountKey {
-  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
-  if (!raw) {
-    throw new Error("GOOGLE_SERVICE_ACCOUNT_KEY environment variable is not set");
-  }
-  return JSON.parse(raw) as ServiceAccountKey;
-}
-
-function base64url(input: string): string {
-  return Buffer.from(input)
-    .toString("base64")
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
-}
-
-async function createJWT(serviceAccount: ServiceAccountKey): Promise<string> {
-  const header = base64url(JSON.stringify({ alg: "RS256", typ: "JWT" }));
-  const now = Math.floor(Date.now() / 1000);
-  const claimSet = base64url(
-    JSON.stringify({
-      iss: serviceAccount.client_email,
-      scope: "https://www.googleapis.com/auth/drive.file",
-      aud: serviceAccount.token_uri,
-      iat: now,
-      exp: now + 3600,
-    })
-  );
-
-  const signInput = `${header}.${claimSet}`;
-  const crypto = await import("crypto");
-  const sign = crypto.createSign("RSA-SHA256");
-  sign.update(signInput);
-  const signature = sign
-    .sign(serviceAccount.private_key, "base64")
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
-
-  return `${signInput}.${signature}`;
-}
+let cachedToken: { token: string; expiresAt: number } | null = null;
 
 async function getAccessToken(): Promise<string> {
-  const serviceAccount = getServiceAccountKey();
-  const jwt = await createJWT(serviceAccount);
+  if (cachedToken && Date.now() < cachedToken.expiresAt) {
+    return cachedToken.token;
+  }
 
-  const response = await fetch(serviceAccount.token_uri, {
+  const response = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
-      grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
-      assertion: jwt,
+      client_id: GOOGLE_CLIENT_ID,
+      client_secret: GOOGLE_CLIENT_SECRET,
+      refresh_token: GOOGLE_REFRESH_TOKEN,
+      grant_type: "refresh_token",
     }),
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to get access token: ${response.statusText}`);
+    const err = await response.text();
+    throw new Error(`Google Drive auth failed: ${response.status} ${err}`);
   }
 
-  const data = (await response.json()) as GoogleTokenResponse;
+  const data = await response.json();
+  cachedToken = {
+    token: data.access_token,
+    expiresAt: Date.now() + (data.expires_in - 60) * 1000,
+  };
   return data.access_token;
 }
 
 export function getGoogleDriveUrl(fileId: string): string {
-  return `https://drive.google.com/uc?id=${fileId}`;
+  return `https://lh3.googleusercontent.com/d/${fileId}`;
 }
 
 export function getGoogleDriveThumbnailUrl(fileId: string): string {
-  return `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`;
+  return `https://lh3.googleusercontent.com/d/${fileId}=s400`;
 }
 
 export async function uploadToGoogleDrive(
@@ -115,7 +72,7 @@ export async function uploadToGoogleDrive(
   ]);
 
   const response = await fetch(
-    "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,webViewLink,webContentLink",
+    "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name",
     {
       method: "POST",
       headers: {

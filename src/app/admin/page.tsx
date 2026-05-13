@@ -61,7 +61,11 @@ export default function AdminPage() {
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data) {
-          setCoupleData(data.couple || { bride: { name: "", photo: "", bio: "" }, groom: { name: "", photo: "", bio: "" }, loveStory: "" });
+          setCoupleData({
+            ...(data.couple || { bride: { firstName: "", lastName: "", photo: "", bio: "" }, groom: { firstName: "", lastName: "", photo: "", bio: "" }, loveStory: "" }),
+            heroPhoto: data.heroPhoto || "",
+            heroPhotoMobile: data.heroPhotoMobile || "",
+          });
           const events = (data.events || []).map((ev: Record<string, unknown>) => ({
             _id: ev._id as string | undefined,
             title: (ev.title as string) || "",
