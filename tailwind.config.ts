@@ -13,6 +13,17 @@ const config: Config = {
           DEFAULT: '#C9A96E',
           dark: '#B08D4F',
         },
+        vintage: {
+          cream: '#FAF8F5',
+          paper: '#FFFFFF',
+          tape: '#E8DFC4',
+          ink: '#3D3D3D',
+        },
+      },
+      fontFamily: {
+        script: ['var(--font-script)', 'Caveat', 'cursive'],
+        names: ['var(--font-names)', 'Sacramento', 'cursive'],
+        vintage: ['var(--font-mono)', 'Courier Prime', 'monospace'],
       },
     },
   },
