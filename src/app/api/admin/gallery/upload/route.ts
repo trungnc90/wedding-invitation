@@ -78,17 +78,18 @@ export async function POST(request: NextRequest) {
       photo: galleryEntry,
     });
   } catch (error) {
+    console.error("[gallery/upload] error:", error instanceof Error ? error.message : error);
     if (
       error instanceof Error &&
       error.message.includes("Google Drive")
     ) {
       return NextResponse.json(
-        { error: "File upload failed" },
+        { error: `File upload failed: ${error.message}` },
         { status: 502 }
       );
     }
     return NextResponse.json(
-      { error: "Service temporarily unavailable" },
+      { error: error instanceof Error ? error.message : "Service temporarily unavailable" },
       { status: 503 }
     );
   }

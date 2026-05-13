@@ -29,6 +29,11 @@ yarn-error.log*
 # seed script with production credentials
 scripts/seed-db.js
 
+# Google Drive credentials
+google-drive-creds.json
+scripts/client_secret_*.json
+wedding-website-*.json
+
 # vercel
 .vercel
 
