@@ -24,40 +24,49 @@ export default function HeroSection({
   });
 
   return (
-    <section className="relative w-full aspect-[3/4] md:aspect-[16/9] flex flex-col items-center justify-end text-center overflow-hidden bg-black">
-      {/* Desktop hero (16:9) - hidden on mobile */}
-      <Image
-        src={heroPhoto}
-        alt={`${brideName} - ${groomName}`}
-        fill
-        priority
-        className="object-cover hidden md:block"
-        sizes="100vw"
-      />
-      {/* Mobile hero (9:16) - hidden on desktop */}
-      <Image
-        src={heroPhotoMobile || heroPhoto}
-        alt={`${brideName} - ${groomName}`}
-        fill
-        priority
-        className="object-cover md:hidden"
-        sizes="100vw"
-      />
-      <div className="absolute inset-0 bg-black/40" />
+    <section className="w-full bg-vintage-cream p-2 sm:p-3 md:p-4">
+      {/* White border frame */}
+      <div className="relative w-full bg-vintage-paper p-2 sm:p-3 md:p-4 shadow-lg">
+        {/* Photo container */}
+        <div className="relative w-full aspect-[3/4] md:aspect-[16/9] overflow-hidden">
+          {/* Desktop hero (16:9) - hidden on mobile */}
+          <Image
+            src={heroPhoto}
+            alt={`${brideName} - ${groomName}`}
+            fill
+            priority
+            className="object-cover hidden md:block"
+            sizes="100vw"
+          />
+          {/* Mobile hero (3:4) - hidden on desktop */}
+          <Image
+            src={heroPhotoMobile || heroPhoto}
+            alt={`${brideName} - ${groomName}`}
+            fill
+            priority
+            className="object-cover md:hidden"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/30" />
 
-      <div className="relative z-10 flex flex-col items-center gap-4 sm:gap-6 px-4 pb-16 sm:pb-20 md:pb-24">
-        <p className="text-white/90 text-xs sm:text-sm md:text-base tracking-widest uppercase">
-          Chúng tôi sắp kết hôn
-        </p>
+          {/* Text group - bottom 1/3 of the photo */}
+          <div className="absolute bottom-0 left-0 right-0 h-1/3 z-10 flex flex-col items-center justify-center text-center px-4">
+            <p className="text-white/80 text-[10px] sm:text-xs md:text-[1vw] tracking-[0.3em] uppercase font-vintage">
+              Chúng tôi sắp kết hôn
+            </p>
 
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white">
-          {groomName} {"-"} {brideName}
-        </h1>
+            <h1 className="font-script text-3xl sm:text-4xl md:text-[4vw] text-white drop-shadow-lg mt-2 sm:mt-3 whitespace-nowrap">
+              {groomName} & {brideName}
+            </h1>
 
-        <p className="text-base sm:text-lg md:text-xl text-white/90">{formattedDate}</p>
+            <p className="text-sm sm:text-base md:text-[1.2vw] text-white/90 font-vintage tracking-wide mt-2 sm:mt-3">
+              {formattedDate}
+            </p>
 
-        <div className="mt-4">
-          <CountdownTimer weddingDate={weddingDate} />
+            <div className="mt-2 sm:mt-3">
+              <CountdownTimer weddingDate={weddingDate} />
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -62,13 +62,13 @@ export default function CountdownTimer({ weddingDate }: CountdownTimerProps) {
   ];
 
   return (
-    <div className="flex justify-center gap-3 sm:gap-4 md:gap-6">
+    <div className="flex justify-center gap-3 sm:gap-4 md:gap-[1.5vw]">
       {units.map((unit) => (
         <div key={unit.label} className="flex flex-col items-center">
-          <span className="text-2xl sm:text-3xl md:text-5xl font-bold text-white">
+          <span className="text-2xl sm:text-3xl md:text-[2.5vw] font-bold text-white">
             {String(unit.value).padStart(2, "0")}
           </span>
-          <span className="text-[10px] sm:text-xs md:text-sm text-white/80 mt-1">
+          <span className="text-[10px] sm:text-xs md:text-[0.8vw] text-white/80 mt-1">
             {unit.label}
           </span>
         </div>

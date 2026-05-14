@@ -1,3 +1,5 @@
+import ScrollReveal from "./ScrollReveal";
+
 export interface EventItem {
   title: string;
   date: string;
@@ -26,25 +28,21 @@ function formatDate(dateStr: string): string {
 
 export default function EventSection({ events }: EventSectionProps) {
   return (
-    <section id="events" className="py-10 sm:py-12 md:py-16 px-4 sm:px-6 bg-gray-50">
+    <section id="events" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-vintage-cream">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">Sự Kiện Cưới</h2>
+        <ScrollReveal>
+          <h2 className="vintage-heading mb-2">Sự Kiện Cưới</h2>
+          <div className="section-divider mb-10 sm:mb-14" />
+        </ScrollReveal>
 
-        <div className="space-y-6 md:space-y-8">
-          {/* First event: full width */}
-          {events.length > 0 && (
-            <div>
-              <EventCard event={events[0]} />
-            </div>
-          )}
-          {/* Remaining events: side by side */}
-          {events.length > 1 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {events.slice(1).map((event, index) => (
-                <EventCard key={index + 1} event={event} />
-              ))}
-            </div>
-          )}
+        <div className="bg-vintage-paper p-3 sm:p-4 md:p-5 shadow-md">
+          <div className="space-y-3 sm:space-y-4">
+            {events.map((event, index) => (
+              <ScrollReveal key={index} delay={100 + index * 100}>
+                <EventCard event={event} />
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -55,22 +53,28 @@ function EventCard({ event }: { event: EventItem }) {
   const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(event.venueAddress)}`;
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 text-center">
-      <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{event.title}</h3>
-
-      <div className="space-y-2 text-gray-600">
-        <p className="text-xs sm:text-sm">{formatDate(event.date)}</p>
-        <p className="text-base sm:text-lg font-medium text-gray-800">{event.time}</p>
-        <p className="text-sm sm:text-base font-medium">{event.venueName}</p>
-        <a
-          href={mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block text-blue-600 hover:text-blue-800 underline text-xs sm:text-sm"
-        >
-          {event.venueAddress}
-        </a>
-      </div>
+    <div className="bg-vintage-cream p-5 sm:p-6 text-center">
+      <h3 className="font-script text-xl sm:text-2xl text-vintage-ink mb-2">
+        {event.title}
+      </h3>
+      <div className="w-12 h-[1px] bg-vintage-ink/20 mx-auto mb-2" />
+      <p className="text-xs sm:text-sm text-vintage-ink/60 font-vintage tracking-wide">
+        {formatDate(event.date)}
+      </p>
+      <p className="text-2xl sm:text-3xl font-vintage font-medium text-vintage-ink my-1">
+        {event.time}
+      </p>
+      <p className="text-sm sm:text-base text-vintage-ink/80 font-vintage">
+        {event.venueName}
+      </p>
+      <a
+        href={mapsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block text-gold-dark hover:text-gold text-xs sm:text-sm font-vintage transition-colors mt-1"
+      >
+        {event.venueAddress}
+      </a>
     </div>
   );
 }

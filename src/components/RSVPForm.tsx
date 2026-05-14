@@ -129,7 +129,7 @@ export default function RSVPForm() {
 
       {/* Name field */}
       <div>
-        <label htmlFor="rsvp-name" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="rsvp-name" className="block text-sm font-vintage tracking-wide text-vintage-ink/70 mb-1">
           Họ và tên <span className="text-red-500">*</span>
         </label>
         <input
@@ -137,12 +137,13 @@ export default function RSVPForm() {
           type="text"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 ${
-            errors.name ? "border-red-500" : "border-gray-300"
+          className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gold/50 bg-transparent ${
+            errors.name ? "border-red-500" : "border-vintage-ink/20"
           }`}
           aria-invalid={!!errors.name}
           aria-describedby={errors.name ? "rsvp-name-error" : undefined}
         />
+
         {errors.name && (
           <p id="rsvp-name-error" className="mt-1 text-sm text-red-600" role="alert">
             {errors.name}
@@ -152,7 +153,7 @@ export default function RSVPForm() {
 
       {/* Attending radio */}
       <fieldset>
-        <legend className="block text-sm font-medium text-gray-700 mb-2">
+        <legend className="block text-sm font-vintage tracking-wide text-vintage-ink/70 mb-2">
           Bạn có tham dự không? <span className="text-red-500">*</span>
         </legend>
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
@@ -163,9 +164,9 @@ export default function RSVPForm() {
               value="yes"
               checked={formData.attending === "yes"}
               onChange={(e) => setFormData({ ...formData, attending: e.target.value })}
-              className="text-pink-500 focus:ring-pink-300"
+              className="text-gold focus:ring-gold/50"
             />
-            <span>Có, tôi sẽ tham dự</span>
+            <span className="font-vintage text-sm">Có, tôi sẽ tham dự</span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -174,9 +175,9 @@ export default function RSVPForm() {
               value="no"
               checked={formData.attending === "no"}
               onChange={(e) => setFormData({ ...formData, attending: e.target.value })}
-              className="text-pink-500 focus:ring-pink-300"
+              className="text-gold focus:ring-gold/50"
             />
-            <span>Không thể tham dự</span>
+            <span className="font-vintage text-sm">Không thể tham dự</span>
           </label>
         </div>
         {errors.attending && (
@@ -189,7 +190,7 @@ export default function RSVPForm() {
       {/* Number of attendees - shown only when attending */}
       {formData.attending === "yes" && (
         <div>
-          <label htmlFor="rsvp-attendees" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="rsvp-attendees" className="block text-sm font-vintage tracking-wide text-vintage-ink/70 mb-1">
             Số người tham dự
           </label>
           <select
@@ -198,7 +199,7 @@ export default function RSVPForm() {
             onChange={(e) =>
               setFormData({ ...formData, numberOfAttendees: parseInt(e.target.value, 10) })
             }
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
+            className="w-full px-4 py-2 border border-vintage-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold/50 bg-transparent"
           >
             {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
               <option key={n} value={n}>
@@ -211,7 +212,7 @@ export default function RSVPForm() {
 
       {/* Message textarea */}
       <div>
-        <label htmlFor="rsvp-message" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="rsvp-message" className="block text-sm font-vintage tracking-wide text-vintage-ink/70 mb-1">
           Lời nhắn
         </label>
         <textarea
@@ -219,11 +220,9 @@ export default function RSVPForm() {
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           rows={4}
-          className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 ${
-            errors.message ? "border-red-500" : "border-gray-300"
+          className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gold/50 bg-transparent resize-none ${
+            errors.message ? "border-red-500" : "border-vintage-ink/20"
           }`}
-          aria-invalid={!!errors.message}
-          aria-describedby={errors.message ? "rsvp-message-error" : undefined}
         />
         {errors.message && (
           <p id="rsvp-message-error" className="mt-1 text-sm text-red-600" role="alert">

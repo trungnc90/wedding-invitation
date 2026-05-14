@@ -143,7 +143,7 @@ export default function WishesSection({ initialWishes }: WishesSectionProps) {
         )}
 
         <div>
-          <label htmlFor="wish-name" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="wish-name" className="block text-sm font-vintage tracking-wide text-vintage-ink/70 mb-1">
             Họ và tên <span className="text-red-500">*</span>
           </label>
           <input
@@ -151,8 +151,8 @@ export default function WishesSection({ initialWishes }: WishesSectionProps) {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 ${
-              errors.name ? "border-red-500" : "border-gray-300"
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gold/50 bg-transparent ${
+              errors.name ? "border-red-500" : "border-vintage-ink/20"
             }`}
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? "wish-name-error" : undefined}
@@ -165,7 +165,7 @@ export default function WishesSection({ initialWishes }: WishesSectionProps) {
         </div>
 
         <div>
-          <label htmlFor="wish-message" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="wish-message" className="block text-sm font-vintage tracking-wide text-vintage-ink/70 mb-1">
             Lời chúc <span className="text-red-500">*</span>
           </label>
           <textarea
@@ -173,8 +173,8 @@ export default function WishesSection({ initialWishes }: WishesSectionProps) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={4}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300 ${
-              errors.message ? "border-red-500" : "border-gray-300"
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gold/50 bg-transparent resize-none ${
+              errors.message ? "border-red-500" : "border-vintage-ink/20"
             }`}
             aria-invalid={!!errors.message}
             aria-describedby={errors.message ? "wish-message-error" : undefined}
@@ -200,7 +200,7 @@ export default function WishesSection({ initialWishes }: WishesSectionProps) {
 
       {/* Wishes list */}
       {wishes.length > 0 ? (
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-lg mx-auto">
           <div
             ref={scrollRef}
             onScroll={handleScroll}
@@ -209,15 +209,15 @@ export default function WishesSection({ initialWishes }: WishesSectionProps) {
             {wishes.slice(0, visibleCount).map((wish) => (
               <div
                 key={wish._id}
-                className="bg-white rounded-lg shadow-sm border border-gray-100 p-3 sm:p-4"
+                className="vintage-card p-3 sm:p-4"
               >
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-1">
-                  <h3 className="font-semibold text-gray-800 text-sm sm:text-base">{wish.name}</h3>
-                  <time className="text-xs text-gray-400" dateTime={wish.createdAt}>
+                  <h3 className="font-semibold text-vintage-ink text-sm sm:text-base">{wish.name}</h3>
+                  <time className="text-xs text-vintage-ink/40 font-vintage" dateTime={wish.createdAt}>
                     {formatDate(wish.createdAt)}
                   </time>
                 </div>
-                <p className="text-gray-600 text-xs sm:text-sm">{wish.message}</p>
+                <p className="text-vintage-ink/70 text-xs sm:text-sm">{wish.message}</p>
               </div>
             ))}
             {visibleCount < wishes.length && (
