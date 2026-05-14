@@ -1,13 +1,14 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
-import { Caveat } from 'next/font/google';
+import { Playfair_Display } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 
-const caveat = Caveat({
-  subsets: ['latin'],
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin', 'vietnamese'],
   weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
   variable: '--font-script',
   display: 'swap',
 });
@@ -18,11 +19,23 @@ const flatlion = localFont({
   display: 'swap',
 });
 
+const fcColdwell = localFont({
+  src: '../fonts/FC-Coldwell-Bridges.otf',
+  variable: '--font-landing',
+  display: 'swap',
+});
+
 const courierPS = localFont({
   src: '../fonts/CourierPS.ttf',
   variable: '--font-mono',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export const metadata: Metadata = {
   title: 'Wedding Invitation',
@@ -39,7 +52,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${caveat.variable} ${flatlion.variable} ${courierPS.variable}`}>
+      <body className={`${playfairDisplay.variable} ${flatlion.variable} ${fcColdwell.variable} ${courierPS.variable}`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

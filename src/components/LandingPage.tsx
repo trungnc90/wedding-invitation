@@ -2,119 +2,87 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import landingConfig from "@/config/landing.json";
 
 interface LandingPageProps {
-  groomName: string;
-  brideName: string;
-  weddingDate: string;
   heroPhoto: string;
-  events: Array<{
-    title: string;
-    date: string;
-    time: string;
-    venueName: string;
-    venueAddress: string;
-  }>;
   onEnter: () => void;
 }
 
 export default function LandingPage({
-  groomName,
-  brideName,
-  weddingDate,
   heroPhoto,
-  events,
   onEnter,
 }: LandingPageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const formattedDate = new Date(weddingDate).toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  }).replace(/\//g, ".");
-
-  const firstEvent = events[0];
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-vintage-cream overflow-auto">
-      {/* Subtle texture overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`,
-        }}
-      />
+    <div
+      className="fixed top-0 left-0 right-0 bottom-0 z-50 bg-vintage-cream overflow-y-auto overflow-x-hidden"
+    >
+      <div className="flex flex-col items-center justify-center min-h-full">
+        <div className="w-full max-w-[380px] flex flex-col items-center text-center px-6 py-6 sm:py-10">
 
-      <div className="relative w-full max-w-lg mx-auto px-6 py-10 sm:py-16 flex flex-col items-center text-center">
-        {/* "To: Guest" line - uppercase serif with wide tracking */}
-        <p className="font-vintage text-[11px] sm:text-xs tracking-[0.35em] uppercase text-vintage-ink mb-8 sm:mb-10">
-          To: My Beloved Friends
+        {/* === AREA 1: Greeting === */}
+        <p className="font-mono text-[11px] sm:text-xs tracking-[0.35em] uppercase text-vintage-ink mb-4 sm:mb-6">
+          {landingConfig.greeting}
         </p>
 
-        {/* Polaroid photo frame with overlapping text */}
-        <div className="relative mb-2 sm:mb-4 mt-10 sm:mt-12">
-          {/* "You're invited to our" - positioned above the photo frame */}
-          <div className="absolute -top-8 sm:-top-10 left-0 right-0 z-20 text-center">
-            <p className="font-script text-vintage-ink text-[28px] sm:text-[36px] leading-[1.1]">
-              You&apos;re invited to our
-            </p>
-          </div>
-
-          {/* Tape decoration - top right */}
-          <div className="absolute -top-3 -right-4 sm:-top-4 sm:-right-6 w-14 h-6 sm:w-18 sm:h-8 bg-vintage-tape/60 rotate-[30deg] z-10 shadow-sm" />
+        {/* === AREA 2: Image Frame === */}
+        <div className="w-full max-w-[320px] sm:max-w-[380px] flex flex-col items-center mb-4 sm:mb-6">
+          {/* Invite text */}
+          <p className="font-names text-vintage-ink text-[9vw] sm:text-[50px] leading-[1.1] -mb-2 relative z-10">
+            {landingConfig.inviteText}
+          </p>
 
           {/* Polaroid card */}
-          <div className="relative bg-vintage-paper p-2 sm:p-3 pb-6 sm:pb-8 shadow-[4px_6px_20px_rgba(0,0,0,0.12)] rotate-[-1.5deg]">
-            {/* Photo */}
-            <div className="relative w-[270px] h-[360px] sm:w-[330px] sm:h-[440px] overflow-hidden">
+          <div className="w-full p-2 sm:p-3 bg-vintage-paper shadow-lg rotate-[-1.5deg]">
+            <div className="relative w-full aspect-[3/4]">
               <Image
                 src={heroPhoto}
-                alt={`${groomName} & ${brideName}`}
+                alt={landingConfig.coupleName}
                 fill
                 priority
                 className={`object-cover sepia-[15%] saturate-[85%] brightness-[1.02] transition-opacity duration-700 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
-                sizes="(max-width: 640px) 280px, 360px"
+                sizes="(max-width: 640px) 80vw, 380px"
                 onLoad={() => setImageLoaded(true)}
               />
-            </div>
-
-            {/* "Wedding" + date - inside the photo, centered */}
-            <div className="absolute top-1 left-0 right-0 sm:top-2 z-10 text-center">
-              <p className="font-script text-vintage-ink text-[38px] sm:text-[48px] leading-[1.1] drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]">
-                Wedding
-              </p>
-              <p className="font-script text-vintage-ink text-[16px] sm:text-[20px] -mt-3 italic drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]">
-                {formattedDate}
-              </p>
+              {/* Event type + date overlay */}
+              <div className="absolute -top-2 left-0 right-0 z-10 text-center">
+                <p className="font-names text-vintage-ink text-[10vw] sm:text-[48px] leading-[1.1] drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]">
+                  {landingConfig.eventType}
+                </p>
+                <p className="font-landing text-vintage-ink text-[4vw] sm:text-[17px] -mt-2 drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]">
+                  {landingConfig.date}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Couple names - large script below the polaroid */}
-        <div className="relative z-10 -mt-4 sm:-mt-6 mb-8 sm:mb-10">
-          <p className="font-names text-[36px] sm:text-[48px] text-vintage-ink leading-tight">
-            Cong Trung <span className="text-[28px] sm:text-[36px]">&</span> Quynh Anh
+          {/* Couple names */}
+          <p className="font-names text-[9vw] sm:text-[48px] text-vintage-ink leading-tight mt-2 sm:mt-3">
+            {landingConfig.coupleName}
           </p>
         </div>
 
-        {/* Event details - courier/monospace */}
-        <div className="mb-8 sm:mb-10">
-          <p className="font-vintage text-[11px] sm:text-sm tracking-[0.3em] uppercase text-vintage-ink mb-1">
-            At 19:00
+        {/* === AREA 3: Event Details === */}
+        <div className="mb-4 sm:mb-6 text-center">
+          <p className="font-mono text-[11px] sm:text-sm tracking-[0.2em] sm:tracking-[0.3em] uppercase text-vintage-ink mb-1">
+            {landingConfig.eventTime}
           </p>
-          <p className="font-vintage text-[10px] sm:text-xs tracking-[0.25em] uppercase text-vintage-ink/70">
-            Giao Xu Hanh Tri, Ninh Son, Khanh Hoa
+          <p className="font-mono text-[10px] sm:text-xs tracking-[0.1em] uppercase text-vintage-ink/70 max-w-[320px] sm:max-w-[380px]">
+            {landingConfig.venue}
           </p>
         </div>
 
-        {/* Enter button */}
+        {/* === AREA 4: Button === */}
         <button
           onClick={onEnter}
-          className="group relative px-8 py-3 sm:px-10 sm:py-3.5 border border-vintage-ink/30 text-vintage-ink/80 font-vintage text-[10px] sm:text-xs tracking-[0.25em] uppercase transition-all duration-300 hover:bg-vintage-ink hover:text-vintage-cream hover:border-vintage-ink"
+          className="px-8 py-3 sm:px-10 sm:py-3.5 border border-vintage-ink/30 text-vintage-ink/80 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:bg-vintage-ink hover:text-vintage-cream hover:border-vintage-ink"
         >
-          Open
+          {landingConfig.buttonText}
         </button>
+
+        </div>
       </div>
     </div>
   );

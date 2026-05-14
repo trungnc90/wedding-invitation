@@ -65,9 +65,10 @@ export default function GallerySection({ photos }: GallerySectionProps) {
   }
 
   return (
-    <section id="gallery" className="py-10 sm:py-12 md:py-16 px-4 sm:px-6">
+    <section id="gallery" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-vintage-cream">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8">Thư Viện Ảnh</h2>
+        <h2 className="vintage-heading mb-2">Thư Viện Ảnh</h2>
+        <div className="section-divider mb-8 sm:mb-12" />
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
           {sortedPhotos.map((photo, index) => (
