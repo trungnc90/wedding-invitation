@@ -7,17 +7,26 @@ import landingConfig from "@/config/landing.json";
 interface LandingPageProps {
   heroPhoto: string;
   onEnter: () => void;
+  animating?: boolean;
 }
 
 export default function LandingPage({
   heroPhoto,
   onEnter,
+  animating = false,
 }: LandingPageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <div
       className="fixed top-0 left-0 right-0 bottom-0 z-50 bg-vintage-cream overflow-y-auto overflow-x-hidden"
+      style={{
+        transition: animating ? 'filter 1s ease-out, opacity 0.6s ease-out 1.2s, transform 1.8s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
+        filter: animating ? 'blur(12px)' : 'blur(0)',
+        opacity: animating ? 0 : 1,
+        transform: animating ? 'scale(1.3)' : 'scale(1)',
+        transformOrigin: 'center 40%',
+      }}
     >
       <div className="flex flex-col items-center justify-center min-h-full">
         <div className="w-full max-w-[380px] flex flex-col items-center text-center px-6 py-6 sm:py-10">
@@ -77,7 +86,8 @@ export default function LandingPage({
         {/* === AREA 4: Button === */}
         <button
           onClick={onEnter}
-          className="px-8 py-3 sm:px-10 sm:py-3.5 border border-vintage-ink/30 text-vintage-ink/80 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:bg-vintage-ink hover:text-vintage-cream hover:border-vintage-ink"
+          disabled={animating}
+          className="px-8 py-3 sm:px-10 sm:py-3.5 border border-vintage-ink/30 text-vintage-ink/80 font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:bg-vintage-ink hover:text-vintage-cream hover:border-vintage-ink disabled:opacity-50 disabled:pointer-events-none"
         >
           {landingConfig.buttonText}
         </button>
