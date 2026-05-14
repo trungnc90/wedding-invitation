@@ -11,6 +11,16 @@
   }
 }
 
+@layer utilities {
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.8s ease-out;
+  }
+}
+
 @layer components {
   .section-divider {
     @apply w-24 h-[1px] bg-vintage-ink/20 mx-auto my-2;

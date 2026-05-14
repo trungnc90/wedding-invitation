@@ -13,16 +13,28 @@ export default function WeddingPageWrapper({
   children,
 }: WeddingPageWrapperProps) {
   const [showLanding, setShowLanding] = useState(true);
+  const [animating, setAnimating] = useState(false);
+
+  const handleEnter = () => {
+    setAnimating(true);
+    setTimeout(() => {
+      setShowLanding(false);
+      setAnimating(false);
+    }, 2000);
+  };
 
   return (
     <>
       {showLanding && (
         <LandingPage
           heroPhoto={heroPhoto}
-          onEnter={() => setShowLanding(false)}
+          onEnter={handleEnter}
+          animating={animating}
         />
       )}
-      {!showLanding && <>{children}</>}
+      <div className={showLanding && !animating ? "hidden" : "animate-fadeIn"}>
+        {children}
+      </div>
     </>
   );
 }
