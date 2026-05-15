@@ -23,11 +23,15 @@ export default function WeddingPageWrapper({
     if (preloadStarted.current) return;
     preloadStarted.current = true;
 
+    // Build Next.js optimized image URL
+    const getOptimizedUrl = (src: string, width: number) =>
+      `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=75`;
+
     // High priority: load immediately (hero + couple)
     preloadImages.high.forEach((url, index) => {
       setTimeout(() => {
         const img = new window.Image();
-        img.src = url;
+        img.src = getOptimizedUrl(url, 828);
       }, index * 100);
     });
 
@@ -35,7 +39,10 @@ export default function WeddingPageWrapper({
     preloadImages.low.forEach((url, index) => {
       setTimeout(() => {
         const img = new window.Image();
-        img.src = url;
+        // Preload both thumbnail size and full size
+        img.src = getOptimizedUrl(url, 400);
+        const imgFull = new window.Image();
+        imgFull.src = getOptimizedUrl(url, 828);
       }, 2000 + index * 500);
     });
   }, [preloadImages]);
