@@ -4,6 +4,7 @@ import { getLocale, getMessages } from 'next-intl/server';
 import { Playfair_Display } from 'next/font/google';
 import localFont from 'next/font/local';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 const playfairDisplay = Playfair_Display({
@@ -58,6 +59,7 @@ export default async function RootLayout({
           {children}
         </NextIntlClientProvider>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
