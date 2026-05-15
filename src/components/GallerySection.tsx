@@ -28,6 +28,7 @@ export function getPrevIndex(current: number, total: number): number {
 
 export default function GallerySection({ photos }: GallerySectionProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [lightboxVisible, setLightboxVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const touchStartX = useRef(0);
 
@@ -55,19 +56,24 @@ export default function GallerySection({ photos }: GallerySectionProps) {
 
   // Lightbox controls
   const closeLightbox = useCallback(() => {
-    setLightboxIndex(null);
+    setLightboxVisible(false);
+    setTimeout(() => setLightboxIndex(null), 1000);
   }, []);
 
   const lightboxNext = useCallback(() => {
-    setLightboxIndex((prev) =>
-      prev !== null ? getNextIndex(prev, sortedPhotos.length) : null
-    );
+    setLightboxIndex((prev) => {
+      const next = prev !== null ? getNextIndex(prev, sortedPhotos.length) : null;
+      if (next !== null) setActiveIndex(next);
+      return next;
+    });
   }, [sortedPhotos.length]);
 
   const lightboxPrev = useCallback(() => {
-    setLightboxIndex((prev) =>
-      prev !== null ? getPrevIndex(prev, sortedPhotos.length) : null
-    );
+    setLightboxIndex((prev) => {
+      const next = prev !== null ? getPrevIndex(prev, sortedPhotos.length) : null;
+      if (next !== null) setActiveIndex(next);
+      return next;
+    });
   }, [sortedPhotos.length]);
 
   useEffect(() => {
@@ -149,7 +155,7 @@ export default function GallerySection({ photos }: GallerySectionProps) {
 
               {/* Center (active) - crossfade stack */}
               <button
-                onClick={() => setLightboxIndex(activeIndex)}
+                onClick={() => { setLightboxIndex(activeIndex); setTimeout(() => setLightboxVisible(true), 10); }}
                 className="flex-shrink-0 w-[55%] sm:w-[40%] cursor-pointer z-10"
               >
                 <div className="bg-vintage-paper p-2 sm:p-2.5 shadow-lg">
@@ -210,7 +216,9 @@ export default function GallerySection({ photos }: GallerySectionProps) {
       {/* Lightbox */}
       {lightboxIndex !== null && sortedPhotos[lightboxIndex] && (
         <div
-          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center"
+          className={`fixed inset-0 z-50 bg-black/85 flex items-center justify-center transition-opacity duration-1000 ${
+            lightboxVisible ? "opacity-100" : "opacity-0"
+          }`}
           onClick={closeLightbox}
           onTouchMove={(e) => e.preventDefault()}
           role="dialog"
@@ -235,7 +243,9 @@ export default function GallerySection({ photos }: GallerySectionProps) {
 
             {/* Polaroid frame - crossfade with all images, lazy load */}
             <div
-              className="bg-vintage-paper p-2 sm:p-3 shadow-xl"
+              className={`bg-vintage-paper p-2 sm:p-3 shadow-xl transition-transform duration-1000 ${
+                lightboxVisible ? "scale-100" : "scale-90"
+              }`}
               style={{ maxHeight: '80vh', maxWidth: '85vw' }}
               onClick={(e) => e.stopPropagation()}
               onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
