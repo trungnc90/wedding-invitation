@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import landingConfig from "@/config/landing.json";
 
 interface LandingPageProps {
@@ -15,7 +14,6 @@ export default function LandingPage({
   onEnter,
   animating = false,
 }: LandingPageProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <div
@@ -51,9 +49,8 @@ export default function LandingPage({
                 alt={landingConfig.coupleName}
                 fill
                 priority
-                className={`object-cover sepia-[15%] saturate-[85%] brightness-[1.02] transition-opacity duration-700 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+                className="object-cover sepia-[15%] saturate-[85%] brightness-[1.02] animate-fadeIn"
                 sizes="(max-width: 640px) 80vw, 380px"
-                onLoad={() => setImageLoaded(true)}
               />
               {/* Event type + date overlay */}
               <div className="absolute -top-2 left-0 right-0 z-10 text-center">

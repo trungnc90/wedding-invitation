@@ -60,6 +60,15 @@ export default async function Home() {
   return (
     <WeddingPageWrapper
       heroPhoto={wedding.heroPhotoMobile || wedding.heroPhoto}
+      preloadImages={{
+        high: [
+          wedding.heroPhoto,
+          wedding.heroPhotoMobile,
+          wedding.couple.bride.photo,
+          wedding.couple.groom.photo,
+        ].filter(Boolean),
+        low: wedding.gallery.map((p: { url: string }) => p.url),
+      }}
     >
       <main className="min-h-screen">
         <LanguageToggle hasEnglish={hasEnglish} />

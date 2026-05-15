@@ -6,6 +6,9 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   allowedDevOrigins: ['http://192.168.*', 'http://10.*', 'http://172.*'],
   images: {
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [200, 400, 800],
     remotePatterns: [
       {
         protocol: 'https',
