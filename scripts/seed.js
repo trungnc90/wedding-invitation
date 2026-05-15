@@ -60,7 +60,16 @@ async function seed() {
         venueAddress: "Triệu Phong 1, Ninh Sơn, Khánh Hòa",
       },      
     ],
-    gallery: [],
+    gallery: [
+      { url: "/images/gallery-1.jpg", thumbnailUrl: "/images/gallery-1.jpg", order: 1 },
+      { url: "/images/gallery-2.jpg", thumbnailUrl: "/images/gallery-2.jpg", order: 2 },
+      { url: "/images/gallery-3.jpg", thumbnailUrl: "/images/gallery-3.jpg", order: 3 },
+      { url: "/images/gallery-4.jpg", thumbnailUrl: "/images/gallery-4.jpg", order: 4 },
+      { url: "/images/gallery-5.jpg", thumbnailUrl: "/images/gallery-5.jpg", order: 5 },
+      { url: "/images/gallery-6.jpg", thumbnailUrl: "/images/gallery-6.jpg", order: 6 },
+      { url: "/images/gallery-7.jpg", thumbnailUrl: "/images/gallery-7.jpg", order: 7 },
+      { url: "/images/gallery-8.jpg", thumbnailUrl: "/images/gallery-8.jpg", order: 8 },
+    ],
     createdAt: new Date(),
     updatedAt: new Date(),
   });
