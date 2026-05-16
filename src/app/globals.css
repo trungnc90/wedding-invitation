@@ -27,7 +27,7 @@
   }
 
   .vintage-heading {
-    @apply font-script text-3xl sm:text-4xl text-vintage-ink text-center;
+    @apply font-vintage text-3xl sm:text-4xl text-vintage-ink text-center;
   }
 
   .vintage-card {

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Cưới - Xuất Thiệp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fdf8f0;
+            --border-color: #c0392b;
+            --text-dark: #2c1810;
+            --text-gold: #8b6914;
+            --text-medium: #4a3520;
+            --line-color: #2c1810;
+            --card-width: 575px;
+            --card-height: 700px;
+            --border-width: 3px;
+            --border-offset: 8px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #f0ebe3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            gap: 40px;
+        }
+
+        /* === CONTROLS === */
+        .controls {
+            max-width: var(--card-width);
+            width: 100%;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .controls-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .controls select, .controls input[type="text"] {
+            padding: 8px 12px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            border: 1px solid var(--text-gold);
+            border-radius: 4px;
+            background: var(--bg-color);
+            color: var(--text-dark);
+            outline: none;
+        }
+        .controls input[type="text"] { flex: 1; }
+        .controls button {
+            padding: 8px 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            background: var(--bg-color);
+            border: 1px solid var(--text-gold);
+            border-radius: 4px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            width: 100%;
+        }
+        .controls label { font-size: 14px; color: var(--text-dark); display: flex; align-items: center; gap: 5px; cursor: pointer; }
+
+        /* === CARD === */
+        .card-wrapper { width: 100%; max-width: var(--card-width); }
+        .card {
+            width: var(--card-width);
+            height: var(--card-height);
+            background: var(--bg-color);
+            position: relative;
+            padding: 40px;
+            transform-origin: top left;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: var(--border-offset); left: var(--border-offset); right: var(--border-offset); bottom: var(--border-offset);
+            border: var(--border-width) solid var(--border-color);
+            pointer-events: none;
+        }
+
+        /* === COVER === */
+        .cover-content { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
+        .cover-names { text-align: center; }
+        .cover-line1 { display: block; margin-left: -40px; }
+        .cover-line1 .cover-name { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 600; color: var(--text-gold); letter-spacing: 3px; }
+        .cover-line1 .cover-and { font-family: 'Great Vibes', cursive; font-size: 28px; color: var(--text-gold); margin-left: 10px; }
+        .cover-line2 { display: block; font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 600; color: var(--text-gold); letter-spacing: 3px; margin-top: 5px; margin-left: 40px; }
+        .cover-date { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--text-dark); letter-spacing: 3px; margin-top: 20px; }
+        .cover-bottom { position: absolute; bottom: 30px; left: 40px; right: 40px; }
+        .cover-bottom .invitee { margin-bottom: -10px; line-height: 1; text-align: center; padding-left: 80px; }
+        .cover-invite { font-size: 14px; font-weight: 600; color: var(--text-dark); letter-spacing: 2px; display: flex; align-items: baseline; width: 100%; }
+        .cover-invite::after { content: ''; flex: 1; border-bottom: 1px dotted var(--text-medium); margin-left: 8px; position: relative; top: 3px; }
+
+        /* === PAGE 1 === */
+        .page1-content { height: 100%; position: relative; padding-left: 35px; padding-top: 20px; padding-bottom: 20px; display: flex; flex-direction: column; }
+        .parents-section { display: flex; flex-direction: row; justify-content: flex-end; margin-bottom: 15px; gap: 30px; }
+        .parent-info { text-align: right; }
+        .parent-info .label { font-size: 15px; color: var(--text-medium); margin-bottom: 4px; }
+        .parent-info .names { font-size: 15px; font-weight: 700; color: var(--text-dark); line-height: 1.6; }
+        .parent-info .address { font-size: 13px; color: var(--text-medium); margin-top: 4px; line-height: 1.4; }
+        .cross { font-size: 15px; }
+        .announcement { text-align: right; margin: 5px 0; font-size: 18px; color: var(--text-medium); }
+        .announcement .highlight { font-weight: 700; font-size: 20px; color: var(--text-dark); }
+        .left-decoration { display: flex; flex-direction: column; align-items: center; position: absolute; left: 0; top: 0; bottom: 0; }
+        .vertical-line { width: 1px; flex-grow: 1; background: var(--text-gold); }
+        .happy-wedding-svg { margin: 0; }
+        .couple-info { text-align: right; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; }
+        .bride-info, .groom-info { margin: 8px 0; text-align: right; }
+        .christian-name { font-size: 17px; font-style: italic; color: var(--text-gold); margin-bottom: 0; }
+        .couple-name { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--text-gold); letter-spacing: 1px; }
+        .and-text { font-family: 'Great Vibes', cursive; font-size: 28px; color: var(--text-gold); margin: 5px 0; text-align: center; margin-left: auto; }
+        .couple-subtitle { font-size: 17px; color: var(--text-medium); margin-top: 8px; }
+        .divider { height: 1px; background: var(--line-color); margin: auto 0 auto auto; }
+        .event-details { text-align: right; }
+        .event-details .event-name { font-size: 16px; color: var(--text-medium); margin-bottom: 4px; width: fit-content; margin-left: auto; }
+        .event-details .location strong { font-size: 18px; color: var(--text-dark); }
+        .event-details .datetime { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-top: 4px; }
+        .event-details .lunar-date { font-size: 14px; font-style: italic; color: var(--text-dark); margin-top: 4px; }
+
+        /* === PAGE 2 === */
+        .page2-content { height: 100%; text-align: center; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+        .save-the-date .save { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--text-gold); letter-spacing: 3px; }
+        .save-the-date .the { font-family: 'Great Vibes', cursive; font-size: 32px; color: var(--text-gold); margin: 0 8px; }
+        .save-the-date .date-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--text-gold); letter-spacing: 3px; }
+        .main-date { font-size: 26px; font-weight: 300; color: var(--text-gold); letter-spacing: 5px; }
+        .vertical-divider { width: 1px; height: 40px; background: var(--line-color); margin: 0 auto; }
+        .invitation-text { font-size: 16px; font-weight: 600; letter-spacing: 4px; color: var(--text-dark); }
+        .dotted-line { border: none; border-top: 1px dotted var(--text-medium); width: 60%; margin: -10px auto 0; }
+        .invitee { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--text-gold); min-height: 24px; margin-bottom: -5px; }
+        .hearts { font-size: 16px; margin-left: 5px; }
+        .reception-invite { font-size: 15px; font-weight: 600; color: var(--text-gold); letter-spacing: 1px; }
+        .venue-label { font-size: 15px; font-weight: 700; color: var(--text-dark); }
+        .venue-name { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700; color: var(--text-gold); }
+        .venue-address { font-size: 15px; color: var(--text-dark); }
+        .time-label { font-size: 15px; font-weight: 700; color: var(--text-dark); }
+        .time-date { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--text-gold); letter-spacing: 2px; }
+        .time-date .separator { margin: 0 8px; color: var(--text-gold); }
+        .lunar-date-2 { font-size: 14px; font-style: italic; color: var(--text-dark); }
+        .closing-message { font-size: 14px; font-style: italic; color: var(--text-dark); line-height: 1.8; }
+    </style>
+</head>
+<body>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <div class="controls-row">
+            <select id="sideSelect">
+                <option value="bride">Nhà gái</option>
+                <option value="groom">Nhà trai</option>
+            </select>
+            <input type="text" id="inviteeInput" placeholder="Nhập tên khách mời...">
+            <label><input type="checkbox" id="heartsCheckbox"> 💕</label>
+        </div>
+        <div class="controls-row">
+            <button id="exportBtn">Xuất PNG</button>
+        </div>
+    </div>
+
+    <!-- COVER -->
+    <div class="card-wrapper"><div class="card">
+        <div class="cover-content">
+            <div class="cover-names">
+                <span class="cover-line1">
+                    <span class="cover-name" id="coverName1"></span>
+                    <span class="cover-and">and</span>
+                </span>
+                <span class="cover-line2" id="coverName2"></span>
+            </div>
+            <div class="cover-date" id="coverDate"></div>
+            <div class="cover-bottom">
+                <div class="invitee"></div>
+                <div class="cover-invite">KÍNH MỜI:</div>
+            </div>
+        </div>
+    </div></div>
+
+    <!-- PAGE 1 -->
+    <div class="card-wrapper"><div class="card">
+        <div class="page1-content">
+            <div class="left-decoration">
+                <div class="vertical-line"></div>
+                <svg class="happy-wedding-svg" width="20" height="280" xmlns="http://www.w3.org/2000/svg">
+                    <text x="10" y="140" text-anchor="middle" dominant-baseline="middle"
+                        transform="rotate(-90, 10, 140)"
+                        font-family="Playfair Display, serif" font-size="18" font-weight="700"
+                        letter-spacing="8" fill="#8b6914">HAPPY WEDDING</text>
+                </svg>
+                <div class="vertical-line"></div>
+            </div>
+            <div class="parents-section" id="parentsSection"></div>
+            <div class="announcement">
+                Trân trọng báo tin <span class="highlight" id="announcementType"></span><br>
+                của con chúng tôi
+            </div>
+            <div class="couple-info" id="coupleInfo"></div>
+            <div class="divider"></div>
+            <div class="event-details">
+                <div class="event-name" id="eventName"></div>
+                <div class="location"><strong id="eventLocation"></strong></div>
+                <div class="datetime" id="eventDatetime"></div>
+                <div class="lunar-date" id="eventLunar"></div>
+            </div>
+        </div>
+    </div></div>
+
+    <!-- PAGE 2 -->
+    <div class="card-wrapper"><div class="card">
+        <div class="page2-content">
+            <div class="save-the-date">
+                <span class="save">SAVE</span>
+                <span class="the">the</span>
+                <span class="date-title">DATE</span>
+            </div>
+            <div class="main-date" id="mainDate"></div>
+            <div class="vertical-divider"></div>
+            <div class="invitation-text">TRÂN TRỌNG KÍNH MỜI</div>
+            <div class="invitee"></div>
+            <hr class="dotted-line">
+            <div class="reception-invite">ĐẾN DỰ BUỔI TIỆC CHUNG VUI CÙNG GIA ĐÌNH CHÚNG TÔI</div>
+            <div class="venue-label">TẠI:</div>
+            <div class="venue-name">TƯ GIA</div>
+            <div class="venue-address" id="venueAddress"></div>
+            <div class="time-label">VÀO LÚC:</div>
+            <div class="time-date" id="timeDate"></div>
+            <div class="lunar-date-2" id="lunarDate2"></div>
+            <div class="closing-message">
+                Sự hiện diện của Quý Khách<br>
+                là niềm vinh hạnh cho gia đình chúng tôi.<br>
+                Rất hân hạnh được đón tiếp!
+            </div>
+        </div>
+    </div></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+    /* ============================================
+       WEDDING DATA - Edit this JSON to customize
+       ============================================ */
+    const weddingData = {
+        bride: {
+            cover: {
+                name1: "QUỲNH ANH",
+                name2: "CÔNG TRUNG",
+                date: "THỨ BẢY | 06 . 06 . 2026"
+            },
+            announcement: "Lễ Vu Quy",
+            parents: [
+                {
+                    label: "Ông Bà",
+                    names: 'Phêrô <strong>NGUYỄN NGỌC QUỲNH</strong><br>Anna <strong>NGUYỄN THỊ KIM LIÊN</strong>',
+                    address: "Thôn Hạnh Trí 2, xã Ninh Sơn,<br>tỉnh Khánh Hoà"
+                },
+                {
+                    label: "Ông Bà",
+                    names: 'Giuse <strong>NGUYỄN CÔNG TRỊ (</strong><span class="cross">✝)</span><br>Phanxica <strong>HOÀNG NGỌC HUYỀN</strong>',
+                    address: "Thôn Triệu Phong 1, xã Ninh Sơn,<br>tỉnh Khánh Hoà"
+                }
+            ],
+            couple: {
+                first: { christian: "Catarina", name: "NGUYỄN NGỌC QUỲNH ANH", class: "bride-info" },
+                second: { christian: "Simon", name: "NGUYỄN CÔNG TRUNG", class: "groom-info" },
+                subtitle: "Thứ nữ & Quý nam"
+            },
+            event: {
+                name: "Thánh lễ Hôn phối cử hành tại",
+                location: "Thánh Đường Giáo Xứ Hạnh Trí",
+                datetime: "Vào lúc 19:00 - Thứ sáu - Ngày 05 . 06 . 2026",
+                lunar: "(Nhằm ngày 20 tháng 04 năm Bính Ngọ)"
+            },
+            reception: {
+                mainDate: "06 . 06 . 2026",
+                address: "Thôn Hạnh Trí 2, xã Ninh Sơn, tỉnh Khánh Hoà",
+                timeDate: '17:00<span class="separator">|</span>06 . 06 . 2026',
+                lunar: "(Nhằm ngày 21 tháng 04 năm Bính Ngọ)"
+            }
+        },
+        groom: {
+            cover: {
+                name1: "CÔNG TRUNG",
+                name2: "QUỲNH ANH",
+                date: "CHỦ NHẬT | 07 . 06 . 2026"
+            },
+            announcement: "Lễ Thành Hôn",
+            parents: [
+                {
+                    label: "Ông Bà",
+                    names: 'Giuse <strong>NGUYỄN CÔNG TRỊ (</strong><span class="cross">✝)</span><br>Phanxica <strong>HOÀNG NGỌC HUYỀN</strong>',
+                    address: "Thôn Triệu Phong 1, xã Ninh Sơn,<br>tỉnh Khánh Hoà"
+                },
+                {
+                    label: "Ông Bà",
+                    names: 'Phêrô <strong>NGUYỄN NGỌC QUỲNH</strong><br>Anna <strong>NGUYỄN THỊ KIM LIÊN</strong>',
+                    address: "Thôn Hạnh Trí 2, xã Ninh Sơn,<br>tỉnh Khánh Hoà"
+                }
+            ],
+            couple: {
+                first: { christian: "Simon", name: "NGUYỄN CÔNG TRUNG", class: "groom-info" },
+                second: { christian: "Catarina", name: "NGUYỄN NGỌC QUỲNH ANH", class: "bride-info" },
+                subtitle: "Quý nam & Thứ nữ"
+            },
+            event: {
+                name: "Thánh lễ Hôn phối cử hành tại",
+                location: "Thánh Đường Giáo Xứ Hạnh Trí",
+                datetime: "Vào lúc 19:00 - Thứ sáu - Ngày 05 . 06 . 2026",
+                lunar: "(Nhằm ngày 20 tháng 04 năm Bính Ngọ)"
+            },
+            reception: {
+                mainDate: "07 . 06 . 2026",
+                address: "Thôn Triệu Phong 1, xã Ninh Sơn, tỉnh Khánh Hoà",
+                timeDate: '17:00<span class="separator">|</span>07 . 06 . 2026',
+                lunar: "(Nhằm ngày 22 tháng 04 năm Bính Ngọ)"
+            }
+        }
+    };
+
+    /* ============================================
+       RENDER LOGIC
+       ============================================ */
+    function renderCard(side) {
+        const data = weddingData[side];
+
+        // Cover
+        document.getElementById('coverName1').textContent = data.cover.name1;
+        document.getElementById('coverName2').textContent = data.cover.name2;
+        document.getElementById('coverDate').textContent = data.cover.date;
+
+        // Announcement
+        document.getElementById('announcementType').textContent = data.announcement;
+
+        // Parents
+        const parentsEl = document.getElementById('parentsSection');
+        parentsEl.innerHTML = data.parents.map(p => `
+            <div class="parent-info">
+                <div class="label">${p.label}</div>
+                <div class="names">${p.names}</div>
+                <div class="address">${p.address}</div>
+            </div>
+        `).join('');
+
+        // Couple
+        const coupleEl = document.getElementById('coupleInfo');
+        coupleEl.innerHTML = `
+            <div class="${data.couple.first.class}">
+                <div class="christian-name">${data.couple.first.christian}</div>
+                <div class="couple-name">${data.couple.first.name}</div>
+            </div>
+            <div class="and-text">and</div>
+            <div class="${data.couple.second.class}">
+                <div class="christian-name">${data.couple.second.christian}</div>
+                <div class="couple-name">${data.couple.second.name}</div>
+                <div class="couple-subtitle">${data.couple.subtitle}</div>
+            </div>
+        `;
+
+        // Event
+        document.getElementById('eventName').textContent = data.event.name;
+        document.getElementById('eventLocation').textContent = data.event.location;
+        document.getElementById('eventDatetime').textContent = data.event.datetime;
+        document.getElementById('eventLunar').textContent = data.event.lunar;
+
+        // Reception (Page 2)
+        document.getElementById('mainDate').textContent = data.reception.mainDate;
+        document.getElementById('venueAddress').textContent = data.reception.address;
+        document.getElementById('timeDate').innerHTML = data.reception.timeDate;
+        document.getElementById('lunarDate2').textContent = data.reception.lunar;
+
+        // Re-scale and adjust
+        setTimeout(() => {
+            scaleCards();
+            adjustAndText(side);
+        }, 50);
+    }
+
+    function adjustAndText(side) {
+        const andText = document.querySelector('.and-text');
+        if (!andText) return;
+
+        // Find the shorter couple name and match "and" width to it
+        const coupleNames = document.querySelectorAll('.couple-name');
+        if (coupleNames.length >= 2) {
+            const width1 = coupleNames[0].offsetWidth;
+            const width2 = coupleNames[1].offsetWidth;
+            const shorterWidth = Math.min(width1, width2);
+            andText.style.width = shorterWidth + 'px';
+            andText.style.marginLeft = 'auto';
+        }
+
+        // Divider width
+        const eventName = document.querySelector('.event-name');
+        const divider = document.querySelector('.divider');
+        if (eventName && divider) {
+            divider.style.width = eventName.offsetWidth + 'px';
+        }
+    }
+
+    /* ============================================
+       SCALING
+       ============================================ */
+    function scaleCards() {
+        document.querySelectorAll('.card-wrapper').forEach(wrapper => {
+            const card = wrapper.querySelector('.card');
+            const availableWidth = wrapper.clientWidth;
+            const cardWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-width'));
+            const scale = availableWidth / cardWidth;
+            card.style.transform = `scale(${scale})`;
+            card.style.transformOrigin = 'top left';
+            const cardHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-height'));
+            wrapper.style.height = (cardHeight * scale) + 'px';
+        });
+    }
+
+    /* ============================================
+       INVITEE INPUT
+       ============================================ */
+    const inviteeInput = document.getElementById('inviteeInput');
+    const heartsCheckbox = document.getElementById('heartsCheckbox');
+    const sideSelect = document.getElementById('sideSelect');
+
+    function updateInvitee() {
+        const name = inviteeInput.value;
+        const hearts = heartsCheckbox.checked ? ' +<span class="hearts">💕</span>' : '';
+        const display = name ? name + hearts : '';
+        document.querySelectorAll('.invitee').forEach(el => {
+            el.innerHTML = display;
+        });
+    }
+
+    inviteeInput.addEventListener('input', updateInvitee);
+    heartsCheckbox.addEventListener('change', updateInvitee);
+    sideSelect.addEventListener('change', () => renderCard(sideSelect.value));
+
+    /* ============================================
+       EXPORT
+       ============================================ */
+    document.getElementById('exportBtn').addEventListener('click', async () => {
+        const cards = document.querySelectorAll('.card');
+        const cardWidth = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-width'));
+        const cardHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-height'));
+        const scale = 2;
+        const inviteeName = inviteeInput.value.trim().replace(/\s*\+\s*$/, '') || 'khach';
+        const prefixes = ['cover', 'page1', 'page2'];
+
+        cards.forEach(card => {
+            card.dataset.originalTransform = card.style.transform;
+            card.style.transform = 'none';
+        });
+
+        for (let i = 0; i < cards.length; i++) {
+            const cardCanvas = await html2canvas(cards[i], {
+                scale: scale,
+                backgroundColor: '#fdf8f0',
+                width: cardWidth,
+                height: cardHeight,
+                useCORS: true,
+                logging: false,
+            });
+
+            const link = document.createElement('a');
+            link.download = `${prefixes[i]}_${inviteeName}.png`;
+            link.href = cardCanvas.toDataURL('image/png');
+            link.click();
+            await new Promise(r => setTimeout(r, 500));
+        }
+
+        cards.forEach(card => {
+            card.style.transform = card.dataset.originalTransform;
+        });
+        scaleCards();
+    });
+
+    /* ============================================
+       INIT
+       ============================================ */
+    window.addEventListener('load', () => {
+        renderCard('bride');
+        scaleCards();
+    });
+    window.addEventListener('resize', scaleCards);
+    </script>
+
+</body>
+</html>

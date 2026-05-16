@@ -20,12 +20,6 @@ export default function HeroSection({
   heroPhotoMobile,
 }: HeroSectionProps) {
   const t = useTranslations("HeroSection");
-  const formattedDate = new Date(weddingDate).toLocaleDateString("vi-VN", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
 
   return (
     <section className="w-full bg-vintage-cream p-2 sm:p-3 md:p-4">
@@ -60,12 +54,14 @@ export default function HeroSection({
                 {t("gettingMarried")}
               </p>
 
-              <h1 className="font-script text-[2.5em] text-white drop-shadow-lg whitespace-nowrap flex items-center gap-[0.15em]">
-                {groomName} & {brideName}
+              <h1 className="text-[1.6em] sm:text-[2.5em] text-white drop-shadow-lg whitespace-nowrap flex items-center gap-[0.2em] tracking-[3px] uppercase" style={{ fontFamily: 'var(--font-hero), Cormorant Garamond, serif', fontWeight: 400 }}>
+                {groomName}
+                <span className="italic text-[0.7em] normal-case">and</span>
+                {brideName}
               </h1>
 
               <p className="text-[0.7em] text-white/90 font-vintage tracking-wide">
-                {formattedDate}
+                {t("weddingDate")}
               </p>
 
               <div>

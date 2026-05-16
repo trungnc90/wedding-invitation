@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import ScrollReveal from "./ScrollReveal";
 
 interface Person {
@@ -30,11 +33,13 @@ export default function CoupleSection({
   bride,
   groom,
 }: CoupleSectionProps) {
+  const t = useTranslations("CoupleSection");
+
   return (
     <section id="couple" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-vintage-cream">
       <div className="max-w-4xl mx-auto">
         <ScrollReveal>
-          <h2 className="vintage-heading mb-2">Chú Rể &amp; Cô Dâu</h2>
+          <h2 className="vintage-heading mb-2">{t("title")}</h2>
           <div className="section-divider mb-10 sm:mb-14" />
         </ScrollReveal>
 
