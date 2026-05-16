@@ -6,8 +6,9 @@ import EventEditor, { EventData } from "@/components/admin/EventEditor";
 import GalleryManager, { GalleryPhoto } from "@/components/admin/GalleryManager";
 import RSVPList from "@/components/admin/RSVPList";
 import WishesManager from "@/components/admin/WishesManager";
+import InvitationExporter from "@/components/admin/InvitationExporter";
 
-type Tab = "couple" | "events" | "gallery" | "rsvps" | "wishes";
+type Tab = "couple" | "events" | "gallery" | "rsvps" | "wishes" | "exporter";
 
 const tabs: { key: Tab; label: string }[] = [
   { key: "couple", label: "Couple" },
@@ -15,6 +16,7 @@ const tabs: { key: Tab; label: string }[] = [
   { key: "gallery", label: "Gallery" },
   { key: "rsvps", label: "RSVPs" },
   { key: "wishes", label: "Wishes" },
+  { key: "exporter", label: "Exporter" },
 ];
 
 export default function AdminPage() {
@@ -134,6 +136,7 @@ export default function AdminPage() {
               )}
               {activeTab === "rsvps" && <RSVPList />}
               {activeTab === "wishes" && <WishesManager />}
+              {activeTab === "exporter" && <InvitationExporter />}
             </div>
           )}
         </main>

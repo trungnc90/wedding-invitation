@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
-import { Playfair_Display } from 'next/font/google';
+import { Playfair_Display, Cormorant_Garamond } from 'next/font/google';
 import localFont from 'next/font/local';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
@@ -12,6 +12,14 @@ const playfairDisplay = Playfair_Display({
   weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
   variable: '--font-script',
+  display: 'swap',
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin', 'vietnamese'],
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-hero',
   display: 'swap',
 });
 
@@ -54,7 +62,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${playfairDisplay.variable} ${flatlion.variable} ${fcColdwell.variable} ${courierPS.variable}`}>
+      <body className={`${playfairDisplay.variable} ${cormorant.variable} ${flatlion.variable} ${fcColdwell.variable} ${courierPS.variable}`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

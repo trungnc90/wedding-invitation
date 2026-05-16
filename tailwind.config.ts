@@ -14,7 +14,7 @@ const config: Config = {
           dark: '#B08D4F',
         },
         vintage: {
-          cream: '#FAF8F5',
+          cream: '#fdf8f0',
           paper: '#FEFDFB',
           tape: '#E8DFC4',
           ink: '#3D3D3D',
@@ -22,6 +22,7 @@ const config: Config = {
       },
       fontFamily: {
         script: ['var(--font-script)', 'Playfair Display', 'serif'],
+        hero: ['var(--font-hero)', 'Cormorant Garamond', 'serif'],
         names: ['var(--font-names)', 'cursive'],
         landing: ['var(--font-landing)', 'cursive'],
         mono: ['var(--font-mono)', 'monospace'],

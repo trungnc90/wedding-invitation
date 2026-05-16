@@ -30,8 +30,8 @@ function validate(data: FormData): FormErrors {
   }
 
   if (data.attending === "yes") {
-    if (data.numberOfAttendees < 1 || data.numberOfAttendees > 10) {
-      errors.numberOfAttendees = "Số người tham dự phải từ 1 đến 10";
+    if (data.numberOfAttendees < 1 || data.numberOfAttendees > 4) {
+      errors.numberOfAttendees = "Số người tham dự phải từ 1 đến 4";
     }
   }
 
@@ -201,7 +201,7 @@ export default function RSVPForm() {
             }
             className="w-full px-4 py-2 border border-vintage-ink/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold/50 bg-transparent"
           >
-            {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+            {Array.from({ length: 4 }, (_, i) => i + 1).map((n) => (
               <option key={n} value={n}>
                 {n}
               </option>
