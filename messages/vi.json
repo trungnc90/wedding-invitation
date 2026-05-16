@@ -1,6 +1,7 @@
 {
   "HeroSection": {
-    "gettingMarried": "Chúng tôi sắp kết hôn"
+    "gettingMarried": "Chúng tôi sắp kết hôn",
+    "weddingDate": "Thứ Sáu, ngày 5 tháng 6, 2026"
   },
   "CountdownTimer": {
     "days": "Ngày",
@@ -9,7 +10,7 @@
     "seconds": "Giây"
   },
   "CoupleSection": {
-    "title": "Cô Dâu - Chú Rể",
+    "title": "Chú Rể - Cô Dâu",
     "bride": "Cô Dâu",
     "groom": "Chú Rể",
     "loveStory": "Câu Chuyện Tình Yêu"

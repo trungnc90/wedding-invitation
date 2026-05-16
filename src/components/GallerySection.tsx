@@ -160,19 +160,27 @@ export default function GallerySection({ photos }: GallerySectionProps) {
               >
                 <div className="bg-vintage-paper p-2 sm:p-2.5 shadow-lg">
                   <div className="relative w-full aspect-[3/4] overflow-hidden">
-                    {sortedPhotos.map((photo, index) => (
-                      <Image
-                        key={photo._id || `thumb-${index}`}
-                        src={photo.thumbnailUrl}
-                        alt={`Ảnh ${index + 1}`}
-                        fill
-                        className={`object-cover transition-opacity duration-500 ease-in-out ${
-                          index === activeIndex ? "opacity-100" : "opacity-0"
-                        }`}
-                        sizes="400px"
-                        priority={index === activeIndex}
-                      />
-                    ))}
+                    {sortedPhotos.map((photo, index) => {
+                      // Only render nearby images to avoid memory issues
+                      const distance = Math.min(
+                        Math.abs(index - activeIndex),
+                        sortedPhotos.length - Math.abs(index - activeIndex)
+                      );
+                      if (distance > 1) return null;
+                      return (
+                        <Image
+                          key={photo._id || `thumb-${index}`}
+                          src={photo.thumbnailUrl}
+                          alt={`Ảnh ${index + 1}`}
+                          fill
+                          className={`object-cover transition-opacity duration-500 ease-in-out ${
+                            index === activeIndex ? "opacity-100" : "opacity-0"
+                          }`}
+                          sizes="400px"
+                          priority={index === activeIndex}
+                        />
+                      );
+                    })}
                   </div>
                 </div>
               </button>
@@ -260,10 +268,11 @@ export default function GallerySection({ photos }: GallerySectionProps) {
               <div className="relative">
                 {sortedPhotos.map((photo, idx) => {
                   const isNearby = lightboxIndex !== null && getLightboxNearby(lightboxIndex).includes(idx);
+                  if (!isNearby) return null;
                   return (
                     <Image
                       key={`lb-${idx}`}
-                      src={isNearby ? photo.url : photo.thumbnailUrl}
+                      src={photo.url}
                       alt={`Ảnh ${idx + 1}`}
                       width={900}
                       height={1200}

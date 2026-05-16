@@ -54,7 +54,7 @@ function EventCard({ event }: { event: EventItem }) {
 
   return (
     <div className="bg-vintage-cream p-5 sm:p-6 text-center">
-      <h3 className="font-script text-xl sm:text-2xl text-vintage-ink mb-2">
+      <h3 className="font-vintage text-xl sm:text-2xl text-vintage-ink mb-2">
         {event.title}
       </h3>
       <div className="w-12 h-[1px] bg-vintage-ink/20 mx-auto mb-2" />
