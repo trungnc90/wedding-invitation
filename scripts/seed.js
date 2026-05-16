@@ -27,7 +27,7 @@ async function seed() {
         firstName: "Công Trung",
         lastName: "Nguyễn",
         christianName: "Simon",
-        photo: "/images/groom.JPG",
+        photo: "/images/groom.jpg",
         bio: "",
         father: { firstName: "Công Trị (T)", lastName: "Nguyễn", christianName: "Giuse" },
         mother: { firstName: "Ngọc Huyên", lastName: "Hoàng Thị", christianName: "Phanxica" },
@@ -35,7 +35,7 @@ async function seed() {
       loveStory: "Chúng tôi gặp nhau vào mùa thu năm 2020 tại một quán cà phê nhỏ ở Sài Gòn. Từ cuộc trò chuyện đầu tiên, chúng tôi đã biết rằng đây là người mình muốn đi cùng suốt cuộc đời.",
     },
     heroPhoto: "/images/hero.jpg",
-    heroPhotoMobile: "/images/hero-mobile.JPG",
+    heroPhotoMobile: "/images/hero-mobile.jpg",
     weddingDate: new Date("2026-06-05T10:00:00Z"),
     events: [
       {
