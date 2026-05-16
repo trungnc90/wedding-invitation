@@ -28,6 +28,7 @@ yarn-error.log*
 
 # seed script with production credentials
 scripts/seed-db.js
+scripts/seed-dev-db.js
 
 # Google Drive credentials
 google-drive-creds.json
